@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "tasks.h"
 
+void usage_info();
 
 int main(int argc, char *argv[]) 
 {
@@ -28,23 +29,7 @@ int main(int argc, char *argv[])
 		usage_info();
 	}
 
-	if(strcmp(mode, "-dt") == 0) 
-	{
-		done_task(&task);
-	}
-	else if(strcmp(mode, "-rt") == 0) 
-	{
-		delete_task_from_tasklist(&task);
-	}
-	else if(strcmp(mode, "-rb") == 0) 
-	{
-		delete_task_from_backlog(&task);
-	}
-	else if(strcmp(mode, "-ro") == 0) 
-	{
-		delete_task_from_offlist(&task);
-	}
-	else if(strcmp(mode, "-a") == 0)
+	if(strcmp(mode, "-a") == 0)
 	{
 		insert_task(task_char);
 	}
@@ -55,6 +40,10 @@ int main(int argc, char *argv[])
 	else if(strcmp(mode, "-b") == 0)
 	{
 		backlog_tasks();
+	}
+	else if(strcmp(mode, "-dt") == 0) 
+	{
+		done_task(&task);
 	}
 	else if(strcmp(mode, "-db") == 0)
 	{
@@ -84,6 +73,18 @@ int main(int argc, char *argv[])
 	{
 		list_offlist();
 	}
+	else if(strcmp(mode, "-rt") == 0) 
+	{
+		delete_task_from_tasklist(&task);
+	}
+	else if(strcmp(mode, "-rb") == 0) 
+	{
+		delete_task_from_backlog(&task);
+	}
+	else if(strcmp(mode, "-ro") == 0) 
+	{
+		delete_task_from_offlist(&task);
+	}
 	else if(strcmp(mode, "-h") == 0)
 	{
 		usage_info();
@@ -95,15 +96,19 @@ void usage_info()
 	printf("\n\t*** USAGE ***\n");
 	printf("\n\t\tOptions:\n");
 	printf("\n\t\t'-a'\t~>  append a new task to your taskboard");
-	printf("\n\t\t'-d'\t~>  mark a task from your taskboard as done");
-	printf("\n\t\t'-dl'\t~>  list this week's finished tasks");
+	printf("\n\t\t'-dt'\t~>  mark a task from your taskboard as done");
+	printf("\n\t\t'-db'\t~>  mark a task from your backlog as done");
 	printf("\n\t\t'-l'\t~>  list current taskboard");
 	printf("\n\t\t'-b'\t~>  move remaining tasks to backlog for tomorrow");
 	printf("\n\t\t'-bl'\t~>  list current backlog");
 	printf("\n\t\t'-bc'\t~>  clean up all tasks in backlog");
-	printf("\n\t\t'-o'\t~>  move task to offlist which has no time limits");
+	printf("\n\t\t'-ot'\t~>  move task from tasks into offlist");
+	printf("\n\t\t'-ob'\t~>  move task from backlog into offlist");
 	printf("\n\t\t'-ol'\t~>  list current offlist");
-	printf("\n\t\t'-r'\t~>  delete task completely");
+	printf("\n\t\t'-rt'\t~>  delete task completely");
+	printf("\n\t\t'-rb'\t~>  delete backlog task completely");
+	printf("\n\t\t'-ro'\t~>  delete offlist task completely");
+	printf("\n\t\t'-dl'\t~>  list this week's finished tasks");
 	printf("\n\t\t'-h'\t~>  get help");
 
 	printf("\n\n\t*** Have Fun ;-) ***\n");
