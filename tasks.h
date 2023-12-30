@@ -127,11 +127,11 @@ void done_backlog(int* task){
   }
 
   char move_from_backlog[100];
-  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into done select * from backlog where rowid == '%u';", task);
+  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into done select * from backlog where rowid == '%u';", *task);
   sqlite3_exec(db, move_from_backlog, NULL, NULL, NULL);
 
   char from_backlog[100];
-  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where rowid == '%u';", task);
+  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where rowid == '%u';", *task);
   sqlite3_exec(db, from_backlog, NULL, NULL, NULL);
 
 }
@@ -295,7 +295,7 @@ void list_backlog()
   }
 
   sqlite3_stmt *stmt;
-  if (sqlite3_prepare_v2(db, "select * from backlog;", -1, &stmt, NULL)) {
+  if (sqlite3_prepare_v2(db, "select rowid, task from backlog;", -1, &stmt, NULL)) {
     printf("Error executing sql statement\n");
     sqlite3_close(db);
     exit(-1);
