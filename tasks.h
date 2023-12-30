@@ -20,10 +20,10 @@ void printColumnValueList(sqlite3_stmt* stmt, int col) {
   int colType = sqlite3_column_type(stmt, col);
   switch(colType) {
     case SQLITE_TEXT:
-      printf("\t~> %s", sqlite3_column_text(stmt, col));
+      printf("\t %s", sqlite3_column_text(stmt, col));
       break;
     default: 
-      printf("\t\t\t~> %u", sqlite3_column_int(stmt, col));
+      printf("\t\t~> %u:", sqlite3_column_int(stmt, col));
   }
 }
 
@@ -400,7 +400,7 @@ void list_done()
   }
 
   sqlite3_stmt *stmt;
-  if (sqlite3_prepare_v2(db, "select * from done;", -1, &stmt, NULL)) {
+  if (sqlite3_prepare_v2(db, "select rowid, task from done;", -1, &stmt, NULL)) {
     printf("Error executing sql statement\n");
     sqlite3_close(db);
     exit(-1);
