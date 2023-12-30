@@ -39,6 +39,62 @@ int get_done()
 }
 
 
+void list_offlist()
+{
+  sqlite3 *db;
+  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+    printf("Could not open the.db\n");
+    exit(-1);
+  }
+
+  sqlite3_stmt *stmt;
+  if (sqlite3_prepare_v2(db, "select * from offlist;", -1, &stmt, NULL)) {
+    printf("Error executing sql statement\n");
+    sqlite3_close(db);
+    exit(-1);
+  }
+
+  sqlite3_bind_int (stmt, 1, 2);
+  while (sqlite3_step(stmt) != SQLITE_DONE) {
+    for (int col=0; col<=1; col++) {
+      printColumnValueList(stmt, col);
+    }
+    printf("\n");
+  }
+
+  sqlite3_finalize(stmt);
+  sqlite3_close(db);
+
+}
+void offset_task(char *task)
+{
+  printf("\n\n");
+  printf("\tFree Tasks: \n\n");
+
+  sqlite3 *db;
+  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+    printf("Could not open the.db\n");
+    exit(-1);
+  }
+
+  char move_from_tasks[100];
+  snprintf(move_from_tasks, sizeof(move_from_tasks), "insert into offlist select * from tasks where task == '%s';", task);
+  sqlite3_exec(db, move_from_tasks, NULL, NULL, NULL);
+
+  char move_from_backlog[100];
+  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into offlist select * from backlog where task == '%s';", task);
+  sqlite3_exec(db, move_from_backlog, NULL, NULL, NULL);
+
+
+  char from_tasks[100];
+  snprintf(from_tasks, sizeof(from_tasks), "delete from tasks where task == '%s';", task);
+  sqlite3_exec(db, from_tasks, NULL, NULL, NULL);
+
+  char from_backlog[100];
+  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where task == '%s';", task);
+  sqlite3_exec(db, from_backlog, NULL, NULL, NULL);
+  sqlite3_close(db);
+}
 
 void remove_task(char *task){
 

@@ -5,11 +5,11 @@
 int main(int argc, char *argv[]) 
 {
 
-	char *mode, *title;
+	char *mode, *task;
 	if(argc == 3) 
 	{
 		mode = argv[1];
-		title = argv[2];
+		task = argv[2];
 	}
 	else if(argc == 2)
 	{
@@ -18,15 +18,15 @@ int main(int argc, char *argv[])
 
 	if (strcmp(mode, "-d") == 0) 
 	{
-		remove_task(title);
+		remove_task(task);
 	}
 	else if(strcmp(mode, "-r") == 0) 
 	{
-		delete_task(title);
+		delete_task(task);
 	}
 	else if(strcmp(mode, "-a") == 0)
 	{
-		insert_task(title);
+		insert_task(task);
 	}
 	else if(strcmp(mode, "-l") == 0)
 	{
@@ -48,6 +48,14 @@ int main(int argc, char *argv[])
 	{
 		list_done();
 	}
+	else if(strcmp(mode, "-o") == 0)
+	{
+		offset_task(task);
+	}
+	else if(strcmp(mode, "-ol") == 0)
+	{
+		list_offlist();
+	}
 	else if(strcmp(mode, "-h") == 0)
 	{
 		usage_info();
@@ -65,6 +73,8 @@ void usage_info()
 	printf("\n\t\t'-b'\t~>  move remaining tasks to backlog for tomorrow");
 	printf("\n\t\t'-bl'\t~>  list current backlog");
 	printf("\n\t\t'-bc'\t~>  clean up all tasks in backlog");
+	printf("\n\t\t'-o'\t~>  move task to offlist which has no time limits");
+	printf("\n\t\t'-ol'\t~>  list current offlist");
 	printf("\n\t\t'-r'\t~>  delete task completely");
 	printf("\n\t\t'-h'\t~>  get help");
 
