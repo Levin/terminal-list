@@ -67,6 +67,25 @@ void remove_task(char *task){
   sqlite3_close(db);
 }
 
+void delete_task(char *task){
+
+  sqlite3 *db;
+  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+    printf("Could not open the.db\n");
+    exit(-1);
+  }
+
+  char tasks[100];
+  snprintf(tasks, sizeof(tasks), "DELETE FROM tasks where task == '%s'", task);
+  sqlite3_exec(db, tasks, NULL, NULL, NULL);
+
+  char backlog[100];
+  snprintf(backlog, sizeof(backlog), "DELETE FROM backlog where task == '%s'", task);
+  sqlite3_exec(db, backlog, NULL, NULL, NULL);
+
+  sqlite3_close(db);
+}
+
 
 void create(){
   sqlite3 *db;
