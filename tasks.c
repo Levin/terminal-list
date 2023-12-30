@@ -40,6 +40,10 @@ int main(int argc, char *argv[])
 	{
 		delete_task_from_backlog(&task);
 	}
+	else if(strcmp(mode, "-ro") == 0) 
+	{
+		delete_task_from_offlist(&task);
+	}
 	else if(strcmp(mode, "-a") == 0)
 	{
 		insert_task(task_char);
@@ -68,9 +72,13 @@ int main(int argc, char *argv[])
 	{
 		list_done();
 	}
-	else if(strcmp(mode, "-o") == 0)
+	else if(strcmp(mode, "-ot") == 0)
 	{
 		offset_task(&task);
+	}
+	else if(strcmp(mode, "-ob") == 0)
+	{
+		offset_backlog(&task);
 	}
 	else if(strcmp(mode, "-ol") == 0)
 	{

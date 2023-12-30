@@ -52,7 +52,7 @@ void list_offlist()
   }
 
   sqlite3_stmt *stmt;
-  if (sqlite3_prepare_v2(db, "select * from offlist;", -1, &stmt, NULL)) {
+  if (sqlite3_prepare_v2(db, "select rowid, task from offlist;", -1, &stmt, NULL)) {
     printf("Error executing sql statement\n");
     sqlite3_close(db);
     exit(-1);
@@ -72,8 +72,6 @@ void list_offlist()
 }
 void offset_task(int *task)
 {
-  printf("\n\n");
-  printf("\tFree Tasks: \n\n");
 
   sqlite3 *db;
   if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
@@ -81,21 +79,31 @@ void offset_task(int *task)
     exit(-1);
   }
 
-  char move_from_tasks[100];
-  snprintf(move_from_tasks, sizeof(move_from_tasks), "insert into offlist select * from tasks where rowid == '%u';", task);
-  sqlite3_exec(db, move_from_tasks, NULL, NULL, NULL);
-
   char move_from_backlog[100];
-  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into offlist select * from backlog where rowid == '%u';", task);
+  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into offlist select * from backlog where rowid == '%u';", *task);
   sqlite3_exec(db, move_from_backlog, NULL, NULL, NULL);
 
+  char from_backlog[100];
+  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where rowid == '%u';", *task);
+  sqlite3_exec(db, from_backlog, NULL, NULL, NULL);
+  sqlite3_close(db);
+}
 
-  char from_tasks[100];
-  snprintf(from_tasks, sizeof(from_tasks), "delete from tasks where rowid == '%u';", task);
-  sqlite3_exec(db, from_tasks, NULL, NULL, NULL);
+void offset_backlog(int *task)
+{
+
+  sqlite3 *db;
+  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+    printf("Could not open the.db\n");
+    exit(-1);
+  }
+
+  char move_from_backlog[100];
+  snprintf(move_from_backlog, sizeof(move_from_backlog), "insert into offlist select * from backlog where rowid == '%u';", *task);
+  sqlite3_exec(db, move_from_backlog, NULL, NULL, NULL);
 
   char from_backlog[100];
-  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where rowid == '%u';", task);
+  snprintf(from_backlog, sizeof(from_backlog), "delete from backlog where rowid == '%u';", *task);
   sqlite3_exec(db, from_backlog, NULL, NULL, NULL);
   sqlite3_close(db);
 }
@@ -165,6 +173,22 @@ void delete_task_from_backlog(int* task){
 
   sqlite3_close(db);
 }
+
+void delete_task_from_offlist(int* task){
+
+  sqlite3 *db;
+  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+    printf("Could not open the.db\n");
+    exit(-1);
+  }
+
+  char tasks[100];
+  snprintf(tasks, sizeof(tasks), "DELETE FROM offlist where rowid == %u", *task);
+  sqlite3_exec(db, tasks, NULL, NULL, NULL);
+
+  sqlite3_close(db);
+}
+
 
 
 void create(){
