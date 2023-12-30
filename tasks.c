@@ -5,28 +5,44 @@
 int main(int argc, char *argv[]) 
 {
 
-	char *mode, *task;
+	char *mode, *task_char;
+	int task = 0;
 	if(argc == 3) 
 	{
 		mode = argv[1];
-		task = argv[2];
+		if(strcmp(mode, "-a") == 0)
+		{
+			task_char = argv[2];
+		}
+		else 
+		{
+			task = atoi(argv[2]);
+		}
 	}
 	else if(argc == 2)
 	{
 		mode = argv[1];
 	}
-
-	if (strcmp(mode, "-d") == 0) 
+	else 
 	{
-		remove_task(task);
+		usage_info();
 	}
-	else if(strcmp(mode, "-r") == 0) 
+
+	if(strcmp(mode, "-dt") == 0) 
 	{
-		delete_task(task);
+		done_task(&task);
+	}
+	else if(strcmp(mode, "-rt") == 0) 
+	{
+		delete_task_from_tasklist(&task);
+	}
+	else if(strcmp(mode, "-rb") == 0) 
+	{
+		delete_task_from_backlog(&task);
 	}
 	else if(strcmp(mode, "-a") == 0)
 	{
-		insert_task(task);
+		insert_task(task_char);
 	}
 	else if(strcmp(mode, "-l") == 0)
 	{
@@ -35,6 +51,10 @@ int main(int argc, char *argv[])
 	else if(strcmp(mode, "-b") == 0)
 	{
 		backlog_tasks();
+	}
+	else if(strcmp(mode, "-db") == 0)
+	{
+		done_backlog(&task);
 	}
 	else if(strcmp(mode, "-bl") == 0)
 	{
@@ -50,7 +70,7 @@ int main(int argc, char *argv[])
 	}
 	else if(strcmp(mode, "-o") == 0)
 	{
-		offset_task(task);
+		offset_task(&task);
 	}
 	else if(strcmp(mode, "-ol") == 0)
 	{

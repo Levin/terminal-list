@@ -20,7 +20,7 @@ void send_login_greet()
 	printf("\n\n\tYesterday's Backlog: \n\n");
 	read_backlog();
 	printf("\n\n\tNot yet sheduled tasks: \n\n");
-	read_offlist();
+	list_offlist();
 
 }
 
