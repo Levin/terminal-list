@@ -5,8 +5,6 @@
 
 void send_login_greet()
 {
-
-
 	printf("\n\n");
 	print_welcome();
 	printf("\t\t      ---\n");
@@ -15,8 +13,6 @@ void send_login_greet()
 	printf("\t\t    ---\n");
 	printf("\tYou solved | %u | tasks this week\n", get_done());
 	printf("\t\t    ---\n");
-	print_tasks();
-
 }
 
 

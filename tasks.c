@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	}
 	else if(strcmp(mode, "-l") == 0)
 	{
-		list_tasks();
+		print_tasks();
 	}
 	else if(strcmp(mode, "-b") == 0)
 	{
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	}
 	else if(strcmp(mode, "-bl") == 0)
 	{
-		list_backlog();
+		print_backlog();
 	}
 	else if(strcmp(mode, "-bc") == 0)
 	{
