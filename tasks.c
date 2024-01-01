@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
 	{
 		insert_task(task_char);
 	}
+	else if(strcmp(mode, "-i") == 0)
+	{
+		initiate_daily_tasks();
+	}
 	else if(strcmp(mode, "-l") == 0)
 	{
 		print_tasks();
@@ -96,6 +100,7 @@ void usage_info()
 	printf("\n\t*** USAGE ***\n");
 	printf("\n\t\tOptions:\n");
 	printf("\n\t\t'-a'\t~>  append a new task to your taskboard");
+	printf("\n\t\t'-i'\t~>  initiates your daily tasks on first login");
 	printf("\n\t\t'-dt'\t~>  mark a task from your taskboard as done");
 	printf("\n\t\t'-db'\t~>  mark a task from your backlog as done");
 	printf("\n\t\t'-l'\t~>  list current taskboard");

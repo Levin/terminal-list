@@ -478,5 +478,30 @@ void list_done()
 }
 
 
+void initiate_daily_tasks()
+{
+
+  int task_amount, i = 0;
+
+  printf("How many tasks today: \t");
+  scanf("%d", &task_amount);
+
+  while (getchar() != '\n');
 
 
+  for(i=1;i<=task_amount;i++)
+  {
+    char task[20];
+    printf("Task %u: ", i);
+
+    fgets(task, 20, stdin);
+
+    size_t len = strlen(task);
+    if (len > 0 && task[len - 1] == '\n') {
+      task[len - 1] = '\0';
+    }
+
+    insert_task(task);
+
+  }
+}
