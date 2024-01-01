@@ -405,11 +405,11 @@ void backlog_tasks()
   }
 
   char count[50];
-  int streak = 0;
+  int tasks = 0;
   snprintf(count, sizeof(count), "SELECT COUNT(*) FROM tasks;");
-  sqlite3_exec(db, count, callback, &streak, NULL);
+  sqlite3_exec(db, count, callback, &tasks, NULL);
 
-  if(streak != 0) {
+  if(tasks != 0) {
     reset_streak();
   } 
   else {
