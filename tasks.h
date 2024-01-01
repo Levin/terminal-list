@@ -74,7 +74,7 @@ void printColumnValueList(sqlite3_stmt* stmt, int col) {
 int get_done()
 {
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -90,7 +90,7 @@ int get_done()
 void list_offlist()
 {
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -112,13 +112,13 @@ void list_offlist()
 
   sqlite3_finalize(stmt);
   sqlite3_close(db);
-
 }
+
 void offset_task(int *task)
 {
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -137,7 +137,7 @@ void offset_backlog(int *task)
 {
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -152,10 +152,11 @@ void offset_backlog(int *task)
   sqlite3_close(db);
 }
 
-void done_task(int* task){
+void done_task(int* task)
+{
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -173,7 +174,7 @@ void done_task(int* task){
 void done_backlog(int* task){
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -191,7 +192,7 @@ void done_backlog(int* task){
 void delete_task_from_tasklist(int* task){
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -206,7 +207,7 @@ void delete_task_from_tasklist(int* task){
 void delete_task_from_backlog(int* task){
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -221,7 +222,7 @@ void delete_task_from_backlog(int* task){
 void delete_task_from_offlist(int* task){
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -237,7 +238,7 @@ void delete_task_from_offlist(int* task){
 
 void create(){
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -251,7 +252,7 @@ void insert_task(char *task)
 {
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -266,13 +267,13 @@ void insert_task(char *task)
 void read_tasks()
 {
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
 
   sqlite3_stmt *stmt;
-  if (sqlite3_prepare_v2(db, "select * from tasks;", -1, &stmt, NULL)) {
+  if (sqlite3_prepare_v2(db, "select rowid, task from tasks;", -1, &stmt, NULL)) {
     printf("Error executing sql statement\n");
     sqlite3_close(db);
     exit(-1);
@@ -281,7 +282,7 @@ void read_tasks()
   sqlite3_bind_int (stmt, 1, 2);
   while (sqlite3_step(stmt) != SQLITE_DONE) {
     for (int col=0; col<=1; col++) {
-      printColumnValue(stmt, col);
+      printColumnValueList(stmt, col);
     }
     printf("\n");
   }
@@ -297,7 +298,7 @@ void list_tasks()
   printf("\tToday's left Tasks: \n\n");
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -326,13 +327,13 @@ void list_tasks()
 void read_backlog()
 {
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
 
   sqlite3_stmt *stmt;
-  if (sqlite3_prepare_v2(db, "select * from backlog;", -1, &stmt, NULL)) {
+  if (sqlite3_prepare_v2(db, "select rowid, task from backlog;", -1, &stmt, NULL)) {
     printf("Error executing sql statement\n");
     sqlite3_close(db);
     exit(-1);
@@ -342,7 +343,7 @@ void read_backlog()
 
   while (sqlite3_step(stmt) != SQLITE_DONE) {
     for (int col=0; col<=1; col++) {
-      printColumnValue(stmt, col);
+      printColumnValueList(stmt, col);
     }
     printf("\n");
   }
@@ -357,7 +358,7 @@ void list_backlog()
   printf("\tYesterdays leftovers: \n\n");
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -386,7 +387,7 @@ void backlog_tasks()
 {
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -419,7 +420,7 @@ void cleanup_backlog()
 {
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
@@ -438,7 +439,7 @@ void list_done()
   printf("\tThis Week's finished Tasks: \n\n");
 
   sqlite3 *db;
-  if (sqlite3_open("/home/levin/code/c/system/tasks.db", &db)) {
+  if (sqlite3_open("/home/levin/dbs/tasks.db", &db)) {
     printf("Could not open the.db\n");
     exit(-1);
   }
