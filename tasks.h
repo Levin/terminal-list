@@ -20,6 +20,7 @@ void print_welcome()
 
 void print_tasks()
 {
+  printf("\n\n");
   printf("\t································································\n");
   printf("\t:  _____         _             _       _____         _         :\n");
   printf("\t: |_   _|__   __| | __ _ _   _( )___  |_   _|_ _ ___| | _____  :\n");
@@ -29,9 +30,11 @@ void print_tasks()
   printf("\t:                        |___/                                 :\n");
   printf("\t································································\n");
   read_tasks();
+  printf("\n\n");
 }
 void print_backlog()
 {
+  printf("\n\n");
   printf("\t··································································\n");
   printf("\t:  ____             _    _               _____         _         :\n");
   printf("\t: | __ )  __ _  ___| | _| | ___   __ _  |_   _|_ _ ___| | _____  :\n");
@@ -41,10 +44,19 @@ void print_backlog()
   printf("\t:                                |___/                           :\n");
   printf("\t··································································\n");
   read_backlog();
+  printf("\n\n");
 }
 
 void print_offlist()
 {
+  printf("\n\n");
+  printf("\t·······························\n");
+  printf("\t:   ___   __  __ _ _     _    :\n");
+  printf("\t:  / _ \\ / _|/ _| (_)___| |_  :\n");
+  printf("\t: | | | | |_| |_| | / __| __| :\n");
+  printf("\t: | |_| |  _|  _| | \\__ \\ |_  :\n");
+  printf("\t:  \\___/|_| |_| |_|_|___/\\__| :\n");
+  printf("\t·······························\n");
   list_offlist();
   printf("\n\n");
 }
@@ -53,10 +65,10 @@ void printColumnValue(sqlite3_stmt* stmt, int col) {
   int colType = sqlite3_column_type(stmt, col);
   switch(colType) {
     case SQLITE_TEXT:
-      printf("\t\t\t~> %s", sqlite3_column_text(stmt, col));
+      printf("\t\t\t %s", sqlite3_column_text(stmt, col));
       break;
     default: 
-      printf("\t\t\t~> %u", sqlite3_column_text(stmt, col));
+      printf("\t\t\t %u", sqlite3_column_text(stmt, col));
   }
 }
 
@@ -67,7 +79,7 @@ void printColumnValueList(sqlite3_stmt* stmt, int col) {
       printf("\t %s", sqlite3_column_text(stmt, col));
       break;
     default: 
-      printf("\t\t~> %u:", sqlite3_column_int(stmt, col));
+      printf("\t\t %u:", sqlite3_column_int(stmt, col));
   }
 }
 

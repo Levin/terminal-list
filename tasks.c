@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 	}
 	else if(strcmp(mode, "-ol") == 0)
 	{
-		list_offlist();
+		print_offlist();
 	}
 	else if(strcmp(mode, "-rt") == 0) 
 	{
