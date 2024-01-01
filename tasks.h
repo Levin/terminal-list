@@ -16,6 +16,7 @@ void print_welcome()
   printf("\t:     \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|  :\n");
   printf("\t················································\n");
   printf("\t\t\t\tit's %s", ctime(&ti));
+  printf("\n\n");
 }
 
 void print_tasks()
@@ -174,11 +175,11 @@ void done_task(int* task)
   }
 
   char move_from_tasks[100];
-  snprintf(move_from_tasks, sizeof(move_from_tasks), "insert into done select * from tasks where rowid == '%u';", task);
+  snprintf(move_from_tasks, sizeof(move_from_tasks), "insert into done select * from tasks where rowid == '%u';", *task);
   sqlite3_exec(db, move_from_tasks, NULL, NULL, NULL);
 
   char from_tasks[100];
-  snprintf(from_tasks, sizeof(from_tasks), "delete from tasks where rowid == '%u';", task);
+  snprintf(from_tasks, sizeof(from_tasks), "delete from tasks where rowid == '%u';", *task);
   sqlite3_exec(db, from_tasks, NULL, NULL, NULL);
 
 }
